@@ -1,18 +1,17 @@
-const express = require("express");
+import express from "express";
 
 const router = express.Router();
 
-router.get(('/signup'), (req, res)=> {
-    res.send('signup  page')
-})
+router.get("/signup", (req, res) => {
+  res.send("signup page");
+});
 
-router.get(('/login'), (req, res)=> {
-    res.send('login  page')
-})
+router.get("/login", (req, res) => {
+  res.send("login page");
+});
 
-router.get(('/logout'), (req, res)=> {
-    res.send('logout  page')
-})
+router.get("/logout", (req, res) => {
+  res.send("logout page");
+});
 
-
-module.exports = router;
+export default router;

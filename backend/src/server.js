@@ -1,16 +1,33 @@
-const express = require('express');
-const dotenv = require('dotenv');
-const authRoutes = require('./routes/auth');
-const messageRoutes = require('./routes/messageRoutes');
+import express from "express";
+import dotenv from "dotenv";
+import path from "path";
+import { fileURLToPath } from "url";
 
-const app = express();
+import authRoutes from "./routes/auth.js";
+import messageRoutes from "./routes/messageRoutes.js";
 
 dotenv.config();
-const PORT = process.env.PORT
 
-app.use('/api/auth', authRoutes);
-app.use('/api/messages', messageRoutes);
+const app = express();
+const PORT = process.env.PORT || 3000;
 
-app.listen(PORT, ()=> {
-    console.log(`server is running on ${PORT}`);
-})
+// 🔥 ES Module me __dirname banane ka sahi tarika
+const __dirname = path.resolve();
+
+app.use(express.json());
+
+app.use("/api/auth", authRoutes);
+app.use("/api/messages", messageRoutes);
+
+// 🚀 ready for deployment
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "../frontend/dist")));
+
+  app.get("*", (req, res) => {
+    res.sendFile(path.join(__dirname, "../frontend/dist/index.html"));
+  });
+}
+
+app.listen(PORT, () => {
+  console.log(`✅ Server running on port ${PORT}`);
+});
