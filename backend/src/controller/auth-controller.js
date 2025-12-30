@@ -4,6 +4,7 @@ import { generateToken } from "../lib/utils.js";
 import { sendWelcomeEmail } from "../emails/emailHanders.js";
 import { ENV } from "../lib/env.js";
 
+//signup controller
 export const signup = async (req, res) => {
   const { fullName, email, password } = req.body;
 
@@ -74,4 +75,40 @@ export const signup = async (req, res) => {
       error: error.message,
     });
   }
+};
+
+// login controller
+export const login = async (req, res) => {
+  const { email, password } = req.body;
+
+  try {
+    const user = await User.findOne({email});
+    if(!user) return res.status(400).json({message: "Invalid Credentials"}); // never ever tell which one is incorrect userID or Password
+    const isPasswordCorrect =await bcrypt.compare(password, user.password);
+    if(!isPasswordCorrect) return res.status(400).json({message: "Invalid Credentials"});
+
+    generateToken(user._id, res)
+
+    res.status(200).json({
+          id: user._id,
+          fullName: user.fullName,
+          email: user.email,
+          profilePic: user.profilePic,
+        });
+
+  } catch (error) {
+    console.error("Error in login controller");
+     return res.status(500).json({
+      message: "Internal Server Error",
+      error: error.message,
+    });
+  }
+
+};
+
+// logout controller
+export const logout = async (_, res) => {
+  res.cookie("jwt","",{maxAge:0})
+  res.status(200).json({message:"logged out successfully"})
+
 };
