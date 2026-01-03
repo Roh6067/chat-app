@@ -120,5 +120,6 @@ export const logout = async (_, res) => {
 export const updateProfile = async (req, res) => {
   const { fullName, profilePic } = req.body;
   const userId = req.user.id;
+  console.log("will update later");
   
 }
