@@ -18,5 +18,8 @@
   "bugs": {
     "url": "https://github.com/Roh6067/chat-app/issues"
   },
-  "homepage": "https://github.com/Roh6067/chat-app#readme"
+  "homepage": "https://github.com/Roh6067/chat-app#readme",
+  "dependencies": {
+    "cloudinary": "^2.5.1"
+  }
 }

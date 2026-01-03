@@ -1,4 +1,4 @@
-import User from "../models/user.js";
+import User from "../models/User.js";
 import bcrypt from "bcryptjs";
 import { generateToken } from "../lib/utils.js";
 import { sendWelcomeEmail } from "../emails/emailHanders.js";
@@ -116,3 +116,9 @@ export const logout = async (_, res) => {
   res.status(200).json({message:"logged out successfully"})
 
 };
+
+export const updateProfile = async (req, res) => {
+  const { fullName, profilePic } = req.body;
+  const userId = req.user.id;
+  
+}
