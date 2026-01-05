@@ -5,7 +5,7 @@ export const generateToken = (userId, res) => {
     const { JWT_SECRET } = ENV;
     if(!JWT_SECRET) throw new Error("JWT_SECRET is not defined");
     
-    const token = jwt.sign({id: userId}, JWT_SECRET, {
+    const token = jwt.sign({userId}, ENV.JWT_SECRET, {
         expiresIn: '7d'
     });
     res.cookie("jwt", token, {
