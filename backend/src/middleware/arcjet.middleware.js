@@ -18,7 +18,12 @@ export const arcjetProtection = async (req, res, next) => {
             }
         }
 
-        //checl for spoofed bot
+        if (ENV.NODE_ENV !== "production") {
+          next();
+          return;
+        }
+        
+        //check for spoofed bot
         if(decision.results.some(isSpoofedBot)){
             return res.status(403).json({
                 error: "Spoofed Bot Access denied.",
