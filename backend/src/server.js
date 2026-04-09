@@ -4,6 +4,7 @@ import connectDB from "./lib/db.js";
 import { fileURLToPath } from "url";
 import { ENV } from "./lib/env.js";
 import cookieParser from "cookie-parser";
+import cors from "cors";
 
 import authRoutes from "./routes/auth.js";
 import messageRoutes from "./routes/messageRoutes.js";
@@ -16,7 +17,8 @@ const PORT = ENV.PORT || 3000;
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-app.use(express.json());
+app.use(cors({origin: ENV.CLIENT_URL, credentials: true})); // CORS for frontend-backend communication
+app.use(express.json()); // req body parser
 app.use(cookieParser());
 
 app.use("/api/auth", authRoutes);
