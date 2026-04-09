@@ -1,8 +1,15 @@
 import aj from '../lib/arcjet.js';
 import { isSpoofedBot } from '@arcjet/inspect';
+import { ENV } from '../lib/env.js';
 
 export const arcjetProtection = async (req, res, next) => {
     try {
+        if (ENV.NODE_ENV !== "production") {
+          next();
+          return;
+        }
+
+        // 2 - arcjet protection
         const decision = await aj.protect(req);
 
         if(decision.isDenied()){
@@ -18,10 +25,6 @@ export const arcjetProtection = async (req, res, next) => {
             }
         }
 
-        if (ENV.NODE_ENV !== "production") {
-          next();
-          return;
-        }
         
         //check for spoofed bot
         if(decision.results.some(isSpoofedBot)){
