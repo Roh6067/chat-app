@@ -24,10 +24,15 @@ export const useChatStore = create((set, get) => ({
   getAllContacts: async () => {
     set({ isUsersLoading: true });
     try {
-      const res = await axiosInstance.get("/messages/contacts");
-      set({ allContacts: res.data });
+      const res = await axiosInstance.get("/messages/contact");
+      set({
+      allContacts: Array.isArray(res.data)
+      ? res.data
+      : res.data?.contacts || [],
+});
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error?.response?.data?.message);
+      set({ allContacts: [] }); 
     } finally {
       set({ isUsersLoading: false });
     }
@@ -38,7 +43,7 @@ export const useChatStore = create((set, get) => ({
       const res = await axiosInstance.get("/messages/chats");
       set({ chats: res.data.chats });
     } catch (error) {
-      toast.error(error.response.data.message);
+      toast.error(error?.response?.data?.message);
     } finally {
       set({ isUsersLoading: false });
     }
