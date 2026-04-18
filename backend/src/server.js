@@ -18,7 +18,8 @@ const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
 app.use(cors({origin: ENV.CLIENT_URL, credentials: true})); // CORS for frontend-backend communication
-app.use(express.json()); // req body parser
+app.use(express.json({ limit: "20mb" }));
+app.use(express.urlencoded({ limit: "20mb", extended: true }));
 app.use(cookieParser());
 
 app.use("/api/auth", authRoutes);

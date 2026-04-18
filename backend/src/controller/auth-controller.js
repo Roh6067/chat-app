@@ -3,6 +3,7 @@ import bcrypt from "bcryptjs";
 import { generateToken } from "../lib/utils.js";
 import { sendWelcomeEmail } from "../emails/emailHanders.js";
 import { ENV } from "../lib/env.js";
+import cloudinary from "../lib/cloudinary.js";
 
 //signup controller
 export const signup = async (req, res) => {
@@ -135,7 +136,7 @@ export const updateProfile = async (req, res) => {
 
     res.status(200).json(updatedUser);
   } catch (error) {
-    console.log("Error in update profile:", error);
+    console.log("Error in update profile:", error.message);
     res.status(500).json({ message: "Internal server error" });
   }
 };
