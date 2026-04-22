@@ -5,6 +5,7 @@ import User from "../models/User.js";
 
 export const getAllContacts = async (req, res) => {
     try {
+        // console.log("Logged In User ID:", req.user._id);
         // Logic to fetch all contacts for the user
         const loggedInUserId = req.user._id;
         const filteredusers = await User.find({ _id: { $ne: loggedInUserId } }).select("-password");

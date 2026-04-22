@@ -1,5 +1,5 @@
 import { useChatStore } from "../store/useChatStore";
-
+import { useEffect } from "react";
 import BorderAnimatedContainer from "../components/BorderAnimatedContainer";
 import ProfileHeader from "../components/ProfileHeader";
 import ActiveTabSwitch from "../components/ActiveTabSwitch";
@@ -10,6 +10,10 @@ import NoConversationPlaceholder from "../components/NoConversationPlaceholder";
 
 function ChatPage() {
   const { activeTab, selectedUser } = useChatStore();
+
+    useEffect(() => {
+    // console.log("Selected User:", selectedUser);
+    }, [selectedUser]);
 
   return (
     <div className="relative w-full max-w-6xl h-[800px]">
