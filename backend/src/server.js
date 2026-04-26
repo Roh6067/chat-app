@@ -1,17 +1,18 @@
 import express from "express";
-import path from "path";
+import path, { format } from "path";
 import connectDB from "./lib/db.js";
 import { fileURLToPath } from "url";
 import { ENV } from "./lib/env.js";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import {app, server} from "./lib/socket.js";
 
 import authRoutes from "./routes/auth.js";
 import messageRoutes from "./routes/messageRoutes.js";
 
 await connectDB();
 
-const app = express();
+
 const PORT = ENV.PORT || 3000;
 
 const __filename = fileURLToPath(import.meta.url);
@@ -34,6 +35,6 @@ if (ENV.NODE_ENV === "production") {
   });
 }
 
-app.listen(PORT, () => {
+server.listen(PORT, () => {
   console.log(`✅ Server running on port ${PORT}`);
 });
